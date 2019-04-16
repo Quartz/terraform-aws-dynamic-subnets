@@ -9,7 +9,13 @@ module "nat_label" {
 }
 
 locals {
-  nat_gateways_count = "${var.nat_gateway_enabled == "true" ? length(var.availability_zones) : 0}"
+  ## ORIGINAL SETTING ##
+  
+  # nat_gateways_count = "${var.nat_gateway_enabled == "true" ? length(var.availability_zones) : 0}"
+  
+  ## NAT ONLY IN ONE PUBLIC SUBNET ##
+  
+  nat_gateways_count = "${var.nat_gateway_enabled == "true" ? var.availability_zones[0] : 0}"
 }
 
 resource "aws_eip" "default" {
