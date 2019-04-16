@@ -15,7 +15,7 @@ locals {
   
   ## NAT ONLY IN ONE PUBLIC SUBNET ##
   
-  nat_gateways_count = "${var.nat_gateway_enabled == "true" ? list(var.availability_zones[0]) : 0}"
+  nat_gateways_count = "${var.nat_gateway_enabled == "true" ? 1 : 0}"
 }
 
 resource "aws_eip" "default" {
