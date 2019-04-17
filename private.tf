@@ -38,6 +38,11 @@ resource "aws_subnet" "private" {
 resource "aws_route_table" "private" {
   count  = "${length(var.availability_zones)}"
   vpc_id = "${data.aws_vpc.default.id}"
+  
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "${aws_nat_gateway.default.id}"
+  }
 
   tags = "${merge(module.private_subnet_label.tags, map("Name",format("%s%s%s", module.private_subnet_label.id, var.delimiter, replace(element(var.availability_zones, count.index),"-",var.delimiter))))}"
 }
